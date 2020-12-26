@@ -1,0 +1,24 @@
+<ul class="menu">
+    <li><a href="{% url 'main'%}" {% if request.resolver_match.url_name == 'main' %}class="active"{% endif %}>домой</a></li>
+    <li><a href="{% url 'products:index'%}" {% if request.resolver_match.namespace == 'products' %}class="active"{% endif %}>продукты</a></li>
+    <li><a href="{% url 'contacts'%}" {% if request.resolver_match.url_name == 'contacts' %}class="active"{% endif %}>контакты</a></li>
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'auth:edit'%}">{% if user.first_name %}{{ user.first_name }}{% else %}пользователь{% endif %}</a></li>
+        <li><a href="{% url 'auth:logout'%}">Выход</a></li>
+    {% else %}
+        <li><a href="{% url 'auth:login'%}">Войти</a></li>
+    
+    {% endif %}
+    {% if user.is_superuser %}
+        <li><a href="{% url 'admin:users'%}">Админка</a></li>
+    {% endif %}
+</ul>
+<a href="#" class="search"></a>
+<a href="{% url 'basket:view' %}" class="basket">
+    <span>
+        {% if basket %}
+            {{ basket.0.total_cost|floatformat:0 }} руб
+            ({{ basket.0.total_quantity }} шт)
+        {% endif %}
+    </span>
+</a>
