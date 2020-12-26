@@ -2,6 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, User
 from authapp.models import ShopUser
 import django.forms as forms
 import random, hashlib
+from .models import ShopUserProfile
 
 
 
@@ -60,3 +61,13 @@ class ShopUserEditForm(UserChangeForm):
         if data < 18:
             raise forms.ValidationError('Регистрация только для совершеннолетних')
         return data
+
+class ShopUserProfileEditForm(forms.ModelForm):
+    class Meta :
+        model = ShopUserProfile
+        fields = ('tagline', 'aboutMe' , 'gender')
+    
+    def __init__ (self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'

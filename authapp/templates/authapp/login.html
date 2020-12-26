@@ -12,8 +12,18 @@
         <input class="form-control" type="submit" value="Войти">
     </form>
     <button class="btn btn-round form-control">
+        <a href="{% url 'social:begin' 'google-oauth2' %}?next=/" class="">
+            Вход через Google
+        </a>
+    </button>
+    <button class="btn btn-round form-control">
         <a href="{% url 'auth:register' %}" class="">
             Регистрация
+        </a>
+    </button>
+    <button class="btn btn-round form-control last">
+        <a href="{% url 'main' %}" class="">
+            Вернуться на главную
         </a>
     </button>
 
