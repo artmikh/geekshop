@@ -5,7 +5,9 @@
         </a>
     </button>
     <button class = "btn btn-default btn-round form-control last">
-        <a href = "{% url 'ordersapp:order_delete' object.pk %}">удалить</a>
+        <a href = "{% url 'ordersapp:order_delete' object.pk %}">
+            удалить
+        </a>
     </button>
 {% endif %}
 <button class = "btn btn-info btn-round form-control last">
@@ -14,5 +16,7 @@
     </a>
 </button>
 <button class = "btn btn-default btn-round form-control last">
-    <a href = "{% url 'main' %}">на главную</a>
+    <a href = "{% url 'main' %}">
+        на главную
+        </a>
 </button>

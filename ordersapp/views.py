@@ -87,6 +87,7 @@ class OrderUpdateView(UpdateView):
             formset = OrderFormSet(instance=self.object)
         
         data['orderitems'] = formset
+        data['title'] = 'заказ/редактирование'
         
         return data
 
@@ -105,6 +106,11 @@ class OrderUpdateView(UpdateView):
 class OrderDeleteView(DeleteView):
     model = Order
     success_url = reverse_lazy('ordersapp:orders_list')
+
+    def get_context_data (self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'заказ/удаление'
+        return context
 
 def order_forming_complete(request, pk):
     order = get_object_or_404(Order, pk=pk)
