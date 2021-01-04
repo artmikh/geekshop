@@ -28,6 +28,7 @@ urlpatterns = [
     path('contacts/', mainapp.contact, name='contacts'),
     path('admin/', include('adminapp.urls', namespace='admin')),
     path('auth/verify/google/oauth2/' , include( "social_django.urls", namespace= "social" )),
+    path('order' , include( 'ordersapp.urls', namespace= "order" )),
     # path('' , include( "social_django.urls", namespace= "social" )),
     path('admin_old/', admin.site.urls),
 ]

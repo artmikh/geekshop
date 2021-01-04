@@ -1,23 +1,20 @@
 window.onload = function () {
+    // добавляем ajax-обработчик для обновления количества товара
     $('.basket_list').on('click', 'input[type="number"]', function () {
-        var basket_link = event.target;
-        $.ajax({
-            url: "/basket/edit/" + basket_link.name + "/" + basket_link.value + "/",
-            success: function (data) {
-                $('.basket_list').html(data.result);
-            },
-        });
-    event.preventDefault();
-    });
+        var target_href = event.target;
+        
+        if (target_href) {
+            $.ajax({
+                url: "/basket/edit/" + target_href.name + "/" + target_href.value + "/",
 
-    $('.basket_list').on('click', 'button', function () {
-        var basket_link = event.target;
-        $.ajax({
-            url: "/basket/delete/" + basket_link.name,
-            success: function (data) {
-                $('.basket_list').html(data.result);
-            },
-        });
-    event.preventDefault();
+                success: function (data) {
+                    $('.basket_list').html(data.result);
+                    console.log('ajax done');
+                },
+            });
+
+        }
+        event.preventDefault();
     });
+    
 }
