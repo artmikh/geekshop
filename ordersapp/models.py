@@ -4,6 +4,14 @@ from mainapp.models import Product
 
 # Create your models here.
 
+# class OrderItemQuerySet(models.QuerySet):
+    
+#     def delete(self, *args, **kwargs):
+#         for object in self:
+#             object.product.quantity -= object.quantity
+#             object.product.save()
+#         super(OrderItemQuerySet, self).delete(*args, **kwargs)
+
 class Order(models.Model):
     
     FORMING = 'FM'
@@ -36,20 +44,20 @@ class Order(models.Model):
     def __str__(self):
         return 'Текущий заказ: {}'.format(self.id)
     
-    def get_total_quantity (self):
+    def get_total_quantity(self):
         items = self.orderitems.select_related() # находим все элементы заказа
         return sum(list(map(lambda x: x.quantity, items)))
     
-    def get_product_type_quantity (self):
+    def get_product_type_quantity(self):
         items = self.orderitems.select_related()
         return len(items)
     
-    def get_total_cost (self):
+    def get_total_cost(self):
         items = self.orderitems.select_related()
         return sum(list(map(lambda x: x.product_cost, items)))
     
     # переопределяем метод, удаляющий объект
-    def delete (self):
+    def delete(self):
         for item in self.orderitems.select_related(): # находим все элементы заказа
             item.product.quantity += item.quantity # корректируем остатки продуктов на складе
             item.product.save()
@@ -57,7 +65,8 @@ class Order(models.Model):
         self.save()
     
 class OrderItem(models.Model):
-    
+    # objects = OrderItemQuerySet.as_manager()
+
     order = models.ForeignKey(Order, related_name="orderitems", on_delete=models.CASCADE)
     product = models.ForeignKey(Product, verbose_name= 'продукт', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name= 'количество', default=0)
@@ -65,3 +74,12 @@ class OrderItem(models.Model):
     @property
     def product_cost(self):
         return self.product.price * self.quantity
+    
+    # def delete(self):
+    #     self.product.quantity += self.quantity
+    #     self.product.save()
+    #     super(self.__class__, self).delete()
+
+    @staticmethod
+    def get_item(pk):
+        return OrderItem.objects.get(pk=pk)
