@@ -1,4 +1,4 @@
-window.onload = function () {
+window.onload = function() {
     // добавляем ajax-обработчик для обновления количества товара
     $('.basket_list').on('click', 'input[type="number"]', function () {
         var target_href = event.target;
@@ -7,7 +7,7 @@ window.onload = function () {
             $.ajax({
                 url: "/basket/edit/" + target_href.name + "/" + target_href.value + "/",
 
-                success: function (data) {
+                success: function(data) {
                     $('.basket_list').html(data.result);
                     console.log('ajax done');
                 },

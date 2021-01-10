@@ -50,6 +50,19 @@ window.onload = function () {
     $('.order_form select').change(function () {
         var target = event.target;
         console.log(target);
+        
+        if (target) {
+            $.ajax({
+                url: "/order/edit/" + target.name + "/" + target.value + "/",
+
+                success: function (data) {
+                    $('.order_form').html(data.result);
+                    console.log('ajax done');
+                },
+            });
+
+        }
+        event.preventDefault();
     });
 
 

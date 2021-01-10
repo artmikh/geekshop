@@ -15,6 +15,9 @@ from ordersapp.forms import OrderItemForm
 from django.dispatch import receiver
 from django.db.models.signals import pre_save, pre_delete
 
+from django.contrib.auth.decorators import login_required
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 class OrderList(ListView):
     model = Order
@@ -109,6 +112,31 @@ class OrderUpdateView(UpdateView):
                 orderitems.save()
         
         return super().form_valid(form)
+
+@login_required
+def edit(request, name, value):
+    pass
+    # print(f'Order: {OrderItem.objects.get(order=name)}')
+    # print(f'Product: {OrderItem.product}')
+    # if request.is_ajax():
+    #     quantity = int(quantity)
+    #     new_order_item = OrderItem.get_item(pk=pk)
+
+    #     if quantity > 0:
+    #         new_basket_item.quantity = quantity
+    #         new_basket_item.save()
+    #     else:
+    #         new_basket_item.delete()
+        
+    # order_items = OrderItem.objects.filter(pk=value)
+
+    # content = {
+    #     'orderitems': order_items,
+    # }
+    
+    # result = render_to_string('ordersapp/order_form.html', content)
+
+    # return JsonResponse({'result': result})
 
 class OrderDeleteView(DeleteView):
     model = Order
