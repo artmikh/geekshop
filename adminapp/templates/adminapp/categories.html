@@ -21,7 +21,7 @@
                         <a href={% url 'adminapp:category_update' object.pk %}>редактировать</a>
                     </button>
                     <button>
-                        <a href={% url 'adminapp:category_delete' object.pk %}>удалить</a>
+                        <a href={% url 'adminapp:category_delete' object.pk %}>{% if object.is_active %}удалить{% else %}восстановить{% endif %}</a>
                     </button>
                 </div>
                 <div class="category_desc">

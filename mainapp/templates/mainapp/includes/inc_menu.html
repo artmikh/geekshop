@@ -3,7 +3,27 @@
     <li><a href="{% url 'products:index'%}" {% if request.resolver_match.namespace == 'products' %}class="active"{% endif %}>продукты</a></li>
     <li><a href="{% url 'contacts'%}" {% if request.resolver_match.url_name == 'contacts' %}class="active"{% endif %}>контакты</a></li>
     {% if user.is_authenticated %}
-        <li><a href="{% url 'auth:edit'%}">{% if user.first_name %}{{ user.first_name }}{% else %}пользователь{% endif %}</a></li>
+        <li>
+            <div class="dropdown">
+                <a class="dropdown-toggle" href="" data-toggle="dropdown">
+                    {{ user.first_name|default:'Пользователь' }}
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{% url 'auth:edit' %}">
+                            профиль
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'ordersapp:orders_list' %}">
+                            заказы
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        {% comment %} <li><a href="{% url 'auth:edit'%}">{% if user.first_name %}{{ user.first_name }}{% else %}пользователь{% endif %}</a></li> {% endcomment %}
         <li><a href="{% url 'auth:logout'%}">Выход</a></li>
     {% else %}
         <li><a href="{% url 'auth:login'%}">Войти</a></li>

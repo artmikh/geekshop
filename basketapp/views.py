@@ -6,20 +6,36 @@ from django.urls import reverse
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 
+from django.views.generic.list import ListView
+from django.utils.decorators import method_decorator
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
+class BasketListView(ListView):
+    model = Basket
+    template_name = 'basketapp/basket.html'
 
-@login_required
-def basket(request):
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'корзина'
+        return context
+
+# @login_required
+# def basket(request):
     
-    title = 'корзина'
-    basket_items = Basket.objects.filter(user=request.user).order_by('product__category')
+#     title = 'корзина'
+#     basket_items = Basket.objects.filter(user=request.user).order_by('product__category')
     
-    content = {
-        'title': title,
-        'basket_items': basket_items,
-    }
+#     content = {
+#         'title': title,
+#         'basket_items': basket_items,
+#     }
 
-    return render(request, 'basketapp/basket.html', content)
+#     return render(request, 'basketapp/basket.html', content)
 
 @login_required
 def add(request, pk):
