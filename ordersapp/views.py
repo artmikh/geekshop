@@ -18,6 +18,7 @@ from django.db.models.signals import pre_save, pre_delete
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from mainapp.models import Product
 
 class OrderList(ListView):
     model = Order
@@ -113,30 +114,6 @@ class OrderUpdateView(UpdateView):
         
         return super().form_valid(form)
 
-@login_required
-def edit(request, name, value):
-    pass
-    # print(f'Order: {OrderItem.objects.get(order=name)}')
-    # print(f'Product: {OrderItem.product}')
-    # if request.is_ajax():
-    #     quantity = int(quantity)
-    #     new_order_item = OrderItem.get_item(pk=pk)
-
-    #     if quantity > 0:
-    #         new_basket_item.quantity = quantity
-    #         new_basket_item.save()
-    #     else:
-    #         new_basket_item.delete()
-        
-    # order_items = OrderItem.objects.filter(pk=value)
-
-    # content = {
-    #     'orderitems': order_items,
-    # }
-    
-    # result = render_to_string('ordersapp/order_form.html', content)
-
-    # return JsonResponse({'result': result})
 
 class OrderDeleteView(DeleteView):
     model = Order
@@ -168,3 +145,11 @@ def product_quantity_update_save(sender, update_fields, instance, **kwargs):
 def product_quantity_update_delete(sender, instance, **kwargs):
     instance.product.quantity += instance.quantity
     instance.product.save()
+
+def get_product_price(request, pk):
+    if request.is_ajax():
+        product = Product.objects.filter(pk=int(pk)).first()
+        if product:
+            return JsonResponse({'price': product.price})
+        else:
+            return JsonResponse({'price': 0 })
