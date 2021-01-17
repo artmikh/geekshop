@@ -7,6 +7,7 @@ from django.conf import settings
 from authapp.models import ShopUser
 from django.db import transaction
 from authapp.forms import ShopUserProfileEditForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -84,7 +85,7 @@ def register(request):
     }
     return render(request, 'authapp/register.html', content)
 
-
+@login_required
 def edit(request):
     title = 'редактирование'
     if request.method == 'POST':
