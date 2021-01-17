@@ -27,9 +27,9 @@ class OrderList(ListView):
     def get_queryset (self):
         return Order.objects.filter(user=self.request.user)
 
-    @method_decorator(login_required())
-    def dispatch (self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)
+    # @method_decorator(login_required())
+    # def dispatch (self, *args, **kwargs):
+    #     return super(ListView, self).dispatch(*args, **kwargs)
 
 class OrderItemsCreate(CreateView):
     model = Order
@@ -75,9 +75,9 @@ class OrderItemsCreate(CreateView):
         
         return super().form_valid(form)
 
-    @method_decorator(login_required())
-    def dispatch (self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)
+    # @method_decorator(login_required())
+    # def dispatch (self, *args, **kwargs):
+    #     return super(ListView, self).dispatch(*args, **kwargs)
 
 class OrderDetailView(DetailView):
     model = Order
@@ -87,9 +87,9 @@ class OrderDetailView(DetailView):
         context['title'] = 'заказ/просмотр'
         return context
     
-    @method_decorator(login_required())
-    def dispatch (self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)
+    # @method_decorator(login_required())
+    # def dispatch (self, *args, **kwargs):
+    #     return super(ListView, self).dispatch(*args, **kwargs)
 
 class OrderUpdateView(UpdateView):
     model = Order
@@ -128,9 +128,9 @@ class OrderUpdateView(UpdateView):
         
         return super().form_valid(form)
 
-    @method_decorator(login_required())
-    def dispatch (self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)
+    # @method_decorator(login_required())
+    # def dispatch (self, *args, **kwargs):
+    #     return super(ListView, self).dispatch(*args, **kwargs)
 
 
 class OrderDeleteView(DeleteView):
