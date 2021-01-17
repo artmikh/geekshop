@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'adminapp',
     'ordersapp',
     'debug_toolbar',
-    'template-profiler_panel',
+    'template_profiler_panel',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +62,7 @@ MIDDLEWARE = [
 ]
 
 if DEBUG:
-    def show_toolbar (request):
+    def show_toolbar(request):
         return True
     
     DEBUG_TOOLBAR_CONFIG = {
