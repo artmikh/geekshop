@@ -127,4 +127,3 @@ def contact(request):
         # 'basket': basket,
     }
     return render(request, 'mainapp/contact.html', content)
-
