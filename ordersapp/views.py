@@ -15,7 +15,6 @@ from ordersapp.forms import OrderItemForm
 from django.dispatch import receiver
 from django.db.models.signals import pre_save, pre_delete
 
-from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.http import JsonResponse
@@ -26,10 +25,6 @@ class OrderList(ListView):
     
     def get_queryset (self):
         return Order.objects.filter(user=self.request.user)
-
-    # @method_decorator(login_required())
-    # def dispatch (self, *args, **kwargs):
-    #     return super(ListView, self).dispatch(*args, **kwargs)
 
 class OrderItemsCreate(CreateView):
     model = Order
@@ -75,10 +70,6 @@ class OrderItemsCreate(CreateView):
         
         return super().form_valid(form)
 
-    # @method_decorator(login_required())
-    # def dispatch (self, *args, **kwargs):
-    #     return super(ListView, self).dispatch(*args, **kwargs)
-
 class OrderDetailView(DetailView):
     model = Order
     
@@ -86,10 +77,6 @@ class OrderDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'заказ/просмотр'
         return context
-    
-    # @method_decorator(login_required())
-    # def dispatch (self, *args, **kwargs):
-    #     return super(ListView, self).dispatch(*args, **kwargs)
 
 class OrderUpdateView(UpdateView):
     model = Order
@@ -104,8 +91,7 @@ class OrderUpdateView(UpdateView):
             formset = OrderFormSet(self.request.POST, instance=self.object)
             data['orderitems'] = formset
         else: 
-            queryset = self.object.orderitems.select_related()
-            formset = OrderFormSet(instance=self.object, queryset=queryset)
+            formset = OrderFormSet(instance=self.object)
             for form in formset.forms:
                 if form.instance.pk:
                     form.initial['price'] = form.instance.product.price
@@ -127,10 +113,6 @@ class OrderUpdateView(UpdateView):
                 orderitems.save()
         
         return super().form_valid(form)
-
-    # @method_decorator(login_required())
-    # def dispatch (self, *args, **kwargs):
-    #     return super(ListView, self).dispatch(*args, **kwargs)
 
 
 class OrderDeleteView(DeleteView):

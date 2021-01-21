@@ -16,12 +16,10 @@ from django.views.generic.detail import DetailView
 
 def main(request):
     basket = []
-    # if request.user.is_authenticated:
-    #     basket = Basket.objects.filter(user=request.user)
-    # products = Product.objects.all() [:4]
-    products = Product.objects.filter(is_active=True, category__is_active=True ).select_related('category')[:3]
-
-
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user)
+    products = Product.objects.all() [:4]
+    
     content = {
         'title':'Главная',
         'products':products,
@@ -116,10 +114,6 @@ def product(request, pk):
 
     return render(request, 'mainapp/product.html', content)
 
-def load_from_json(file_name):
-    with open(os.path.join(JSON_PATH, file_name + '.json'), 'r',errors='ignore') as infile:
-        return json.load(infile)
-
 def contact(request):
     basket = []
     if request.user.is_authenticated:
@@ -133,5 +127,3 @@ def contact(request):
         # 'basket': basket,
     }
     return render(request, 'mainapp/contact.html', content)
-
-

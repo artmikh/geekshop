@@ -5,7 +5,7 @@ def basket(request):
    basket = []
 
    if request.user.is_authenticated:
-       basket = Basket.objects.filter(user=request.user).order_by('product__category').select_related()
+       basket = Basket.objects.filter(user=request.user)
 
    return {
        'basket': basket,
