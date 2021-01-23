@@ -182,6 +182,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+JSON_PATH = os.path.join(BASE_DIR, 'mainapp/json')
+
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # STATICFILES_DIRS = (BASE_DIR / "static",)

@@ -173,7 +173,8 @@ def product(request, pk):
     return render(request, 'mainapp/product.html', content)
 
 def load_from_json(file_name):
-    with open(os.path.join(json_path, file_name + '.json'), 'r' ,errors='ignore') as infile:
+    # json_path = os.path.join(settings.BASE_DIR, 'mainapp/json')
+    with open(os.path.join(settings.JSON_PATH, file_name + '.json'), 'r' ,errors='ignore') as infile:
         return json.load(infile)
 
 def contact(request):
