@@ -28,7 +28,7 @@ class OrderList(ListView):
 
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 class OrderItemsCreate(CreateView):
     model = Order
@@ -76,7 +76,7 @@ class OrderItemsCreate(CreateView):
 
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 class OrderDetailView(DetailView):
     model = Order
@@ -88,7 +88,7 @@ class OrderDetailView(DetailView):
 
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 class OrderUpdateView(UpdateView):
     model = Order
@@ -128,7 +128,7 @@ class OrderUpdateView(UpdateView):
 
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 
 class OrderDeleteView(DeleteView):
