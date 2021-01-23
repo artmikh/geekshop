@@ -11,11 +11,11 @@ from django.views.generic.detail import DetailView
 from basketapp.models import Basket
 
 from ordersapp.forms import OrderItemForm
-
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.dispatch import receiver
 from django.db.models.signals import pre_save, pre_delete
 
-from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from mainapp.models import Product
@@ -23,8 +23,12 @@ from mainapp.models import Product
 class OrderList(ListView):
     model = Order
     
-    def get_queryset (self):
+    def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(ListView, self).dispatch(*args, **kwargs)
 
 class OrderItemsCreate(CreateView):
     model = Order
@@ -70,6 +74,10 @@ class OrderItemsCreate(CreateView):
         
         return super().form_valid(form)
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(ListView, self).dispatch(*args, **kwargs)
+
 class OrderDetailView(DetailView):
     model = Order
     
@@ -77,6 +85,10 @@ class OrderDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'заказ/просмотр'
         return context
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(ListView, self).dispatch(*args, **kwargs)
 
 class OrderUpdateView(UpdateView):
     model = Order
@@ -113,6 +125,10 @@ class OrderUpdateView(UpdateView):
                 orderitems.save()
         
         return super().form_valid(form)
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(ListView, self).dispatch(*args, **kwargs)
 
 
 class OrderDeleteView(DeleteView):
